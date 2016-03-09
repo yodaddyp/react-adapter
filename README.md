@@ -1,3 +1,3 @@
 # React Adapter
 
-[WIP] Use React components with Fractal. **Not yet ready for use.**
+Experimental React adapter for Fractal. Not ready for use!
