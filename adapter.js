@@ -1,8 +1,11 @@
 'use strict';
 
 require("babel-register")({
-    extensions: [".jsx"],
-    presets: ['react', 'es2015']
+    extensions: ['.jsx'],
+    presets: ['react', 'es2015'],
+    plugins: [
+        'add-module-exports'
+    ]
 });
 
 const Handlebars = require('handlebars');
@@ -10,6 +13,7 @@ const React      = require('react');
 const ReactDOM   = require('react-dom/server');
 const Promise    = require('bluebird');
 const Adapter    = require('@frctl/fractal').Adapter;
+const IntlProvider = require('react-intl').IntlProvider;
 
 class ReactAdapter extends Adapter {
 
@@ -21,7 +25,8 @@ class ReactAdapter extends Adapter {
         delete require.cache[path];
         const component = require(path);
         const element   = React.createElement(component, context);
-        const html      = ReactDOM.renderToStaticMarkup(element);
+        const intlWrapper = React.createElement(IntlProvider, {}, element);
+        const html      = ReactDOM.renderToStaticMarkup(intlWrapper);
         return Promise.resolve(html);
     }
 
